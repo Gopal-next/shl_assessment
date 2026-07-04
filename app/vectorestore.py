@@ -30,13 +30,13 @@ import json
 
 index = faiss.read_index(
 
-    "D:\SHL_assessment\data\index.faiss"
+    "data\index.faiss"
 
 )
 
 with open(
 
-    "D:\SHL_assessment\data\shl_product_catalog.json",
+    "data\shl_product_catalog.json",
 
     encoding="utf8"
 
