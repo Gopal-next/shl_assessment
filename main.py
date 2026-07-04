@@ -1,13 +1,21 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 from schema.request import ChatRequest
 from tools.retrieval import search_assessments
 from agent.shl_agent import invoke
+
+
 app = FastAPI()
 
 memory = []
-@app.get("/health")
 
+
+@app.get("/")
+def home():
+    return RedirectResponse(url="/docs")
+
+
+@app.get("/health")
 def health():
     return {"status": "ok"}
 
