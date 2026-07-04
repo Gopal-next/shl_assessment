@@ -6,7 +6,7 @@ from agent.shl_agent import invoke
 from pathlib import Path
 
 app = FastAPI()
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 
 memory = []
 
