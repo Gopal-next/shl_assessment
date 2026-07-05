@@ -40,14 +40,11 @@ def guardrails(query:str):
     for w in blocked:
         if w in query.lower():
             return True
-
     return False
 
 
 def search_assessments(query):
-
     emb = model.embed_query(query)
-
     emb = np.asarray(
         emb,
         dtype=np.float32

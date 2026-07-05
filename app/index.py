@@ -9,12 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 model = get_model()
-# local
-# with open(
-#     r"D:\\SHL_assessment\\data\\shl_product_catalog.json",
-#     encoding="utf8"
-# ) as f:
-#     catalog = json.load(f)
+
 with open(
     BASE_DIR / "data" / "shl_product_catalog.json",
     encoding="utf8"
@@ -33,27 +28,16 @@ batch_size = 20
 import time
 
 for i in range(0, len(docs), 20):
-
     batch = docs[i:i+20]
-
     while True:
-
         try:
-
             emb = model.embed_documents(batch)
-
             embeddings.extend(emb)
-
             break
-
         except Exception as e:
-
             if "RESOURCE_EXHAUSTED" in str(e):
-
                 print("Quota hit. Waiting 30 sec...")
-
                 time.sleep(64)
-
             else:
 
                 raise e
@@ -77,14 +61,9 @@ index = faiss.IndexFlatL2(
 )
 
 index.add(embeddings)
-# local
-# index = faiss.write_index(
-#     index,
-#     r"D:\\SHL_assessment\\data\\index.faiss"
-# )
 
 index = faiss.write_index(
     index,
     str(BASE_DIR / "data" / "index.faiss")
 )
-print("FAISS index saved")
+# print("FAISS index saved")

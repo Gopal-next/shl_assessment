@@ -5,6 +5,7 @@ confirmed
 approved
 perfect
 that works
+that's work
 keep the shortlist as-is
 keep this list
 done
@@ -20,3 +21,4 @@ sounds good
 this is sufficient
 happy with this
 go ahead with these
+awesome

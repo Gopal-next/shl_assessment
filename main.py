@@ -44,56 +44,93 @@ def chat(req: ChatRequest):
     history = "\n".join(
         f"{m.role}: {m.content}"
         for m in memory
-
     )
 
     result = invoke(history)
-
     reply = result["output"]
-
     if isinstance(reply, list):
         reply = "".join(
+
             item["text"]
-            if isinstance(item, dict) and "text" in item
+            if isinstance(item, dict)
             else str(item)
             for item in reply
-        )
 
+        )
     elif isinstance(reply, dict):
         reply = reply.get(
             "text",
             str(reply)
-            )
-        
+        )
     else:
         reply = str(reply)
     reply = reply.strip()
+    last_message = req.messages[-1].content.lower().strip()
+    end_of_conversation = any(
+        phrase in last_message
+        for phrase in completion_phrases
+    )
 
     recommendations = []
-
     is_clarification = "?" in reply
-
     if not is_clarification:
+        retrieval_messages = [
 
-        recs = search_assessments(history)
+            m.content
+
+            for m in memory
+
+            if not any(
+
+                p in m.content.lower()
+
+                for p in completion_phrases
+
+            )
+
+        ]
+
+        retrieval_query = "\n".join(
+
+            retrieval_messages
+
+        )
+
+        recs = search_assessments(
+
+            retrieval_query
+
+        )
+
         recommendations = [
+
             {
+
                 "name": r["name"],
+
                 "url": r["link"],
+
                 "test_type":
+
                     r["keys"][0]
+
                     if r["keys"]
+
                     else "General"
-                }
-                for r in recs
-                ]
 
-    last_message = req.messages[-1].content.lower().strip()
+            }
 
-    end_of_conversation = any(phrase in last_message for phrase in completion_phrases)
-    # print(history)
+            for r in recs
+
+        ]
+    print(history)
+
     return {
+
         "reply": reply,
+
         "recommendations": recommendations,
+
         "end_of_conversation": end_of_conversation
-        }
+
+    }

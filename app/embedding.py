@@ -26,14 +26,6 @@ def get_model():
         )
 
     return model
-#local
-# def load_catalog():
-
-#     with open("D:\SHL_assessment\data\shl_product_catalog.json",encoding='utf8') as f:
-
-#         data=json.load(f)
-
-#     return data
 def load_catalog():
 
     with open(BASE_DIR / "data" / "shl_product_catalog.json",encoding='utf8') as f:
