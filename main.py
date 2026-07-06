@@ -24,10 +24,8 @@ def load_completion_phrases():
         encoding="utf8"
     ) as f:
         return [
-
             line.strip().lower()
             for line in f
-
             if line.strip()
 
         ]
@@ -55,7 +53,6 @@ def chat(req: ChatRequest):
             if isinstance(item, dict)
             else str(item)
             for item in reply
-
         )
     elif isinstance(reply, dict):
         reply = reply.get(
@@ -91,16 +88,10 @@ def chat(req: ChatRequest):
         ]
 
         retrieval_query = "\n".join(
-
             retrieval_messages
+            )
 
-        )
-
-        recs = search_assessments(
-
-            retrieval_query
-
-        )
+        recs = search_assessments(retrieval_query)
 
         recommendations = [
 
@@ -109,28 +100,19 @@ def chat(req: ChatRequest):
                 "name": r["name"],
 
                 "url": r["link"],
-
                 "test_type":
 
                     r["keys"][0]
-
                     if r["keys"]
-
                     else "General"
-
             }
 
             for r in recs
 
         ]
-    print(history)
-
+    # print(history)
     return {
-
         "reply": reply,
-
         "recommendations": recommendations,
-
         "end_of_conversation": end_of_conversation
-
     }
